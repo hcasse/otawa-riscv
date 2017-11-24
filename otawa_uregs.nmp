@@ -1,146 +1,71 @@
 canon "record"(card(5))
 macro R(r) = if r != 0 then "record"(r); endif
 
-/*
 extend
-	add, addu,
-	and,
-	dadd, daddu,
-	dsub, dsubu,
-	dsllv, dsrav, dsrlv,
-	movz, movn,
-	nor,
-	or,
-	srav, srlv, sllv, slt, sltu,
-	sub, subu,
-	xor
-		otawa_read	= { R(rs); R(rt); }
-		otawa_write = { R(rd); }
+	add, sub,
+	and, or, xor,
+	sll, sra, srl,
+	slt, sltu
+		otawa_read	= { R(src1); R(src2); }
+		otawa_write = { R(dest); }
 
 extend
-	addi, addiu,
-	andi,
-	daddi, daddiu,
-	ori,
-	slti, sltiu,
-	xori
-		otawa_read	= { R(rs); }
-		otawa_write = { R(rt); }
+	addi,
+	andi, ori, xori,
+	slli, srai, srli,
+	slti, sltiu
+		otawa_read	= { R(src); }
+		otawa_write = { R(dest); }
 
 extend
-	lui
+	lui, auipc
 		otawa_read	= { }
-		otawa_write = { R(rt); }		
+		otawa_write = { R(dest); }		
 
 extend
-	dsll, dsra, dsra32, dsrl, dsrl32,
-	sll, sra, srl
-		otawa_read = { R(rt); }
-		otawa_write = { R(rd); }
-
-extend
-	ddiv, div, divu,
-	dmult, dmultu, mult, multu
-		otawa_read = { R(rs); R(rt); }
-		otawa_write = { HI; LO; }
+	div, divu,
+	rem, remu,
+		otawa_read = { R(dividend); R(divisor); }
+		otawa_write = { R(dest) }
 		
 extend
-	mfhi
-		otawa_read	= { HI; }
-		otawa_write = { R(rd); }
+	mul, mulh, mulhu, mulhsu
+		otawa_read	= { R(multiplier); R(multilicand); }
+		otawa_write = { R(dest); }
 	
 extend
-	mflo
-		otawa_read	= { LO; }
-		otawa_write = { R(rd); }
-
-extend
-	mthi
-		otawa_read	= { R(rs); }
-		otawa_write = { HI; }
-	
-extend
-	mtlo
-		otawa_read	= { R(rs); }
-		otawa_write = { LO; }
-
-extend
-	beq, beql,
-	bne, bnel
-		otawa_read = { R(rs); R(rt); }
-		otawa_write = { }
-
-extend
-	bgez, bgezl,
-	bgtz, bgtzl,
-	blez, blezl,
-	bltz, bltzl
-		otawa_read = { R(rs); }
-		otawa_write = { }
-
-extend
-	bgezal, bgezall,
-	bltzal, bltzall
-		otawa_read = { R(rs); }
-		otawa_write = { R(31); }
-
-extend
-	j
-		otawa_read = { }
+	beq, bne,
+	blt, bltu,
+	bge, bgeu
+		otawa_read = { R(src1); R(src2); }
 		otawa_write = { }
 	
 extend
 	jal
 		otawa_read = { }
-		otawa_write = { R(31); }
+		otawa_write = { R(dest); }
 
 extend
 	jalr
-		otawa_read = { R(rs); }
-		otawa_write = { R(rd); }
-
-extend
-	jr
-		otawa_read = { R(rs); }
-		otawa_write = { }
-
-extend
-	lb, lbu, ld, ldl, ldr, lh, lhu, ll, lld, lw, lwl, lwr
 		otawa_read = { R(base); }
-		otawa_write = { R(rt); }
-		
+		otawa_write = { R(dest); }
+
 extend
-	ldcz, lwcz
+	lb, lbu, lh, lhu, lw, lwu, ld
 		otawa_read = { R(base); }
+		otawa_write = { R(dest); }
+
+extend
+	sb, sh, sw, sd
+		otawa_read = { R(base); R(src); }
 		otawa_write = { }
 
 extend
-	sb, sc, sh, sw, swl, swr
-		otawa_read = { R(base); R(rt); }
-		otawa_write = { }
-
-extend
-	sdcz, swcz
-		otawa_read = { R(base); }
-		otawa_write = { }
-
-extend
-	break, copz, sync, syscall
+	fence
 		otawa_read = { }
 		otawa_write = { }
 
 extend
-	pref
-		otawa_read = { R(base); }
-		otawa_write = { }
-
-extend
-	teq, tge, tgeu, tlt, tltu, tne
-		otawa_read = { R(rs); R(rt); }
-		otawa_write = { }
-
-extend
-	teqi, tgei, tgeiu, tlti, tltiu, tnei
-		otawa_read = { R(rs); }
-		otawa_write = { }
-*/
+	syscall
+		otawa_read = { R(source); }
+		otawa_write = { R(dest); }

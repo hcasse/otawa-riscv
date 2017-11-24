@@ -1,0 +1,152 @@
+
+// kind definitions
+let IS_COND		= 0x00001
+let IS_CONTROL  = 0x00002
+let IS_CALL     = 0x00004
+let IS_RETURN	= 0x00008
+let IS_MEM		= 0x00010
+let IS_LOAD		= 0x00020
+let IS_STORE    = 0x00040
+let IS_INT		= 0x00080
+let IS_FLOAT	= 0x00100
+let IS_ALU		= 0x00200
+let IS_MUL		= 0x00400
+let IS_DIV		= 0x00800
+let IS_SHIFT	= 0x01000
+let IS_TRAP		= 0x02000
+let IS_INTERN	= 0x04000
+let IS_MULTI	= 0x08000
+let IS_SPECIAL	= 0x10000
+let IS_INDIRECT = 0x10000
+let IS_UNKNOWN	= 0x20000
+let IS_ATOMIC	= 0x40000
+let IS_BUNDLE	= 0x80000
+
+/*
+// simple ALU
+extend
+	add, addi, addiu, addu,
+	and, andi,
+	dadd, daddi, daddiu, daddu,
+	dsll, dsll32, dsllv,
+	dsra, dsra32, dsrav,
+	dsrl, dsrl32, dsrlv,
+	dsub, dsubu,
+	lui,
+	mfhi, mflo, mthi, mtlo,
+	nor,
+	or, ori,
+	sll, sra, srav, srl, srlv, sllv,
+	slt,  slti, sltiu, sltu, 
+	sub, subu,
+	xor, xori
+		otawa_kind = IS_ALU | IS_INT
+
+// conditional ALU
+extend
+	movz, movn
+		otawa_kind = IS_ALU | IS_INT | IS_COND
+
+// integer division
+extend
+	ddiv, ddivu,
+	div, divu
+		otawa_kind = IS_ALU | IS_INT | IS_DIV
+
+// integer multiplication
+extend
+	dmult, dmultu,
+	mult, multu
+		otawa_kind = IS_ALU | IS_INT | IS_MUL
+
+// simple inconditional branch
+extend
+	j
+		otawa_kind = IS_CONTROL
+
+// indirect inconditional branch or return
+extend
+	jr
+		otawa_kind = IS_CONTROL | (if rs == 31 then IS_RETURN else IS_INDIRECT endif)
+
+// inconditional branch and link
+extend
+	jal
+		otawa_kind = IS_CONTROL | IS_CALL
+
+// indirect inconditional branch and link
+extend
+	jalr
+		otawa_kind = IS_CONTROL | IS_CALL | IS_INDIRECT
+
+// simple conditional branch
+extend
+	bgtz, bgtzl,
+	bltz, bltzl,
+	bne, bnel
+		otawa_kind = IS_CONTROL | IS_COND
+
+// simple conditional possible inconditional
+extend 
+	beq, beql
+		otawa_kind = IS_CONTROL
+				   | (if rs == 0 && rt == 0 then 0 else IS_COND endif)
+extend
+	bgez, bgezl,
+	blez, blezl
+		otawa_kind = IS_CONTROL
+				     | (if rs == 0 && offset == 0 then 0 else IS_COND endif)
+
+// conditional branch and link
+extend
+	bltzal, bltzall
+		otawa_kind = IS_CONTROL | IS_COND | IS_CALL
+
+// conditional branch and link supporting inconditional
+extend
+	bgezal, bgezall
+		otawa_kind = IS_CONTROL | IS_COND | IS_CALL
+				     | (if rs == 0 && offset == 0 then 0 else IS_COND endif)
+
+// integer load
+extend
+	lb, lbu,
+	ld,
+	lh, lhu,
+	lw
+		otawa_kind = IS_MEM | IS_LOAD | IS_INT
+
+// special load
+extend
+	ldcz, ldl, ldr,
+	ll, lld,
+	lwcz, lwl, lwr
+		otawa_kind = IS_MEM | IS_LOAD | IS_INT | IS_SPECIAL
+
+// integer store
+extend
+	sb, sh, sw
+		otawa_kind = IS_MEM | IS_STORE | IS_INT
+
+// special integer store
+extend
+	sc, sdcz, swcz, swl, swr
+		otawa_kind = IS_MEM | IS_STORE | IS_INT | IS_SPECIAL
+
+// special instruction
+extend
+	break, copz
+		otawa_kind = IS_SPECIAL
+
+// internal instruction
+extend
+	pref, sync
+		otawa_kind = IS_INTERN
+
+// control special instruction
+extend
+	syscall, teq, teqi, tge, tgei, tgeiu, tgeu,
+	tlt, tlti, tltiu, tltu, tne, tnei
+		otawa_kind = IS_CONTROL | IS_TRAP
+
+*/

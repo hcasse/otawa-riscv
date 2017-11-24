@@ -1,0 +1,146 @@
+canon "record"(card(5))
+macro R(r) = if r != 0 then "record"(r); endif
+
+/*
+extend
+	add, addu,
+	and,
+	dadd, daddu,
+	dsub, dsubu,
+	dsllv, dsrav, dsrlv,
+	movz, movn,
+	nor,
+	or,
+	srav, srlv, sllv, slt, sltu,
+	sub, subu,
+	xor
+		otawa_read	= { R(rs); R(rt); }
+		otawa_write = { R(rd); }
+
+extend
+	addi, addiu,
+	andi,
+	daddi, daddiu,
+	ori,
+	slti, sltiu,
+	xori
+		otawa_read	= { R(rs); }
+		otawa_write = { R(rt); }
+
+extend
+	lui
+		otawa_read	= { }
+		otawa_write = { R(rt); }		
+
+extend
+	dsll, dsra, dsra32, dsrl, dsrl32,
+	sll, sra, srl
+		otawa_read = { R(rt); }
+		otawa_write = { R(rd); }
+
+extend
+	ddiv, div, divu,
+	dmult, dmultu, mult, multu
+		otawa_read = { R(rs); R(rt); }
+		otawa_write = { HI; LO; }
+		
+extend
+	mfhi
+		otawa_read	= { HI; }
+		otawa_write = { R(rd); }
+	
+extend
+	mflo
+		otawa_read	= { LO; }
+		otawa_write = { R(rd); }
+
+extend
+	mthi
+		otawa_read	= { R(rs); }
+		otawa_write = { HI; }
+	
+extend
+	mtlo
+		otawa_read	= { R(rs); }
+		otawa_write = { LO; }
+
+extend
+	beq, beql,
+	bne, bnel
+		otawa_read = { R(rs); R(rt); }
+		otawa_write = { }
+
+extend
+	bgez, bgezl,
+	bgtz, bgtzl,
+	blez, blezl,
+	bltz, bltzl
+		otawa_read = { R(rs); }
+		otawa_write = { }
+
+extend
+	bgezal, bgezall,
+	bltzal, bltzall
+		otawa_read = { R(rs); }
+		otawa_write = { R(31); }
+
+extend
+	j
+		otawa_read = { }
+		otawa_write = { }
+	
+extend
+	jal
+		otawa_read = { }
+		otawa_write = { R(31); }
+
+extend
+	jalr
+		otawa_read = { R(rs); }
+		otawa_write = { R(rd); }
+
+extend
+	jr
+		otawa_read = { R(rs); }
+		otawa_write = { }
+
+extend
+	lb, lbu, ld, ldl, ldr, lh, lhu, ll, lld, lw, lwl, lwr
+		otawa_read = { R(base); }
+		otawa_write = { R(rt); }
+		
+extend
+	ldcz, lwcz
+		otawa_read = { R(base); }
+		otawa_write = { }
+
+extend
+	sb, sc, sh, sw, swl, swr
+		otawa_read = { R(base); R(rt); }
+		otawa_write = { }
+
+extend
+	sdcz, swcz
+		otawa_read = { R(base); }
+		otawa_write = { }
+
+extend
+	break, copz, sync, syscall
+		otawa_read = { }
+		otawa_write = { }
+
+extend
+	pref
+		otawa_read = { R(base); }
+		otawa_write = { }
+
+extend
+	teq, tge, tgeu, tlt, tltu, tne
+		otawa_read = { R(rs); R(rt); }
+		otawa_write = { }
+
+extend
+	teqi, tgei, tgeiu, tlti, tltiu, tnei
+		otawa_read = { R(rs); }
+		otawa_write = { }
+*/

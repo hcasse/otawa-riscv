@@ -1,0 +1,31 @@
+
+let DELAYED_None	= 0
+let DELAYED_Always	= 1
+let DELAYED_Taken	= 2
+
+/*
+extend
+	beq,
+	bgez, bgezal,
+	bgtz,
+	blez,
+	bltz, bltzal,
+	bne
+		otawa_target = __IADDR + 4 + (coerce(int(30), offset) :: 0<1..0>)
+		otawa_delayed = DELAYED_Always
+
+extend 
+	beql,
+	bgezall, bgezl,
+	bgtzl,
+	blezl,
+	bltzl, bltzall,
+	bnel
+		otawa_target = __IADDR + 4 + (coerce(int(30), offset) :: 0<1..0>)
+		otawa_delayed = DELAYED_Taken
+
+extend
+	j, jal
+		otawa_target = (__IADDR + 4)<63..28> :: instr_index :: 0<1..0>
+		otawa_delayed = DELAYED_Always
+*/

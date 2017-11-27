@@ -46,12 +46,22 @@ extend
 // inconditional branch and link
 extend
 	jal
-		otawa_kind = IS_CONTROL | IS_CALL | IS_INDIRECT
+		otawa_kind = IS_CONTROL | 
+			(if dest == 0 then 0
+			else if dest == 1 then IS_CALL
+			else 0
+			endif endif)
 
 // indirect inconditional branch and link
 extend
 	jalr
-		otawa_kind = IS_CONTROL | IS_CALL | (if offset == 0 && dest == 0 && base == 1 then IS_RETURN else IS_INDIRECT endif)
+		otawa_kind = IS_CONTROL |
+			(if dest == 1 then IS_CALL
+			else if dest == 0 && offset == 0 && base == 1 then IS_RETURN
+			else if dest == 0 && offset == 0 && base != 1 then IS_INDIRECT
+			else IS_CALL | IS_INDIRECT
+			endif endif endif)
+
 
 // simple conditional branch
 extend

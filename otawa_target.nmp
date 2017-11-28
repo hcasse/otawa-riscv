@@ -7,10 +7,10 @@ extend
 	beq, bne,
 	blt, bltu,
 	bge, bgeu
-		otawa_target = NPC + tgt_offset
+		otawa_target = __IADDR + tgt_offset
 		otawa_delayed = DELAYED_Always
 
 extend
-	jal, jalr
-		otawa_target = NPC + tgt_offset;
+	jal
+		otawa_target = __IADDR + tgt_offset
 		otawa_delayed = DELAYED_Always

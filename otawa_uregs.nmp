@@ -1,3 +1,6 @@
+let x = 0
+
+/*
 canon "record"(card(5))
 macro R(r) = if r != 0 then "record"(r); endif
 
@@ -69,3 +72,4 @@ extend
 	syscall
 		otawa_read = { R(source); }
 		otawa_write = { R(dest); }
+*/

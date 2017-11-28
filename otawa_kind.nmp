@@ -32,7 +32,7 @@ extend
 	lui, auipc,
 	addiw, addw, subw,
 	slliw, srliw, sraiw,
-	sllw, srlw, sraw,
+	sllw, srlw, sraw
 		otawa_kind = IS_ALU | IS_INT
 
 // integer division

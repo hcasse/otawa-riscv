@@ -89,6 +89,65 @@ extend
 	sb, sh, sw, sd
 		otawa_kind = IS_MEM | IS_STORE | IS_INT
 
+// floating point load
+extend
+	flw, fld
+		otawa_kind = IS_MEM | IS_LOAD | IS_FLOAT
+
+// floating point store
+extend
+	fsw, fsd
+		otawa_kind = IS_MEM | IS_STORE | IS_FLOAT
+
+// fp: add + mul + fused multiply-add
+extend
+	fadds, faddd,
+	fsubs, fsubd,
+	fmuls, fmuld,
+	fmuladds, fmuladdd,
+	fmulsubs, fmulsubd,
+	fnegmuladds, fnegmuladdd,
+	fnegmulsubs, fnegmulsubd
+		otawa_kind = IS_MUL | IS_FLOAT
+
+// fp: div (single precision)
+extend
+	fdivs
+		otawa_kind = IS_DIV | IS_FLOAT
+
+// fp: div (double precision)
+extend
+	fdivd
+		otawa_kind = IS_DIV | IS_FLOAT | IS_SPECIAL
+
+// fp: sqrt (single precision)
+extend
+	fsqrts
+		otawa_kind = IS_SHIFT | IS_FLOAT
+
+// fp: sqrt (double precision)
+extend
+	fsqrtd
+		otawa_kind = IS_SHIFT | IS_FLOAT | IS_SPECIAL
+
+// fp: minmax
+extend
+	fminmaxs, fminmaxd,
+	fsgnjs, fsgnjd,
+	fcmps, fcmpd,
+	fclasss, fclassd
+		otawa_kind = IS_FLOAT
+
+// ftp: conversion
+extend
+	fcvts, fcvtd,
+	fcvt2s, fcvt2d,
+	fcvt3d, fmv, fmv2,
+	fcvt3s, fcvt4s,
+	fcvt4d, fcvt5d,
+	fmv3, fmv4
+		otawa_kind = IS_FLOAT | IS_INT
+
 // internal instruction
 extend
 	fence

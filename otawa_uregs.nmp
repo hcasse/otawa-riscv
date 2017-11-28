@@ -64,6 +64,57 @@ extend
 		otawa_write = { }
 
 extend
+	flw, fld
+		otawa_read = { R(base); }
+		otawa_write = { F(dest); }
+
+extend
+	fsw, fsd
+		otawa_read = { R(base); F(src); }
+		otawa_write = { }
+
+extend
+	fadds, faddd,
+	fsubs, fsubd,
+	fmuls, fmuld,
+	fdivs, fdivd,
+	fminmaxs, fminmaxd,
+	fsgnjs, fsgnjd
+		otawa_read = { F(src1); F(src2); }
+		otawa_write = { F(dest); }
+
+extend
+	fmuladds, fmuladdd,
+	fmulsubs, fmulsubd,
+	fnegmuladds, fnegmuladdd,
+	fnegmulsubs, fnegmulsubd
+		otawa_read = { F(src1); F(src2); F(src3); }
+		otawa_write = { F(dest); }
+
+extend
+	fsqrts, fsqrtd
+		otawa_read = { F(src); }
+		otawa_write = { F(dest); }
+
+extend
+	fcvts, fcvt2d, fmv2
+	fclasss, fclassd,
+	fcvt3s, fcvt4d, fmv3
+		otawa_read = { F(src); }
+		otawa_write = { R(dest); }
+
+extend
+	fcvt2s, fcvtd, fcvt3d, fmv,
+	fcvt4s, fcvt5d, fmv4
+		otawa_read = { R(src); }
+		otawa_write = { F(dest); }
+
+extend
+	fcmps, fcmpd
+		otawa_read = { F(src1); F(src2); }
+		otawa_write = { R(dest); }
+
+extend
 	fence
 		otawa_read = { }
 		otawa_write = { }

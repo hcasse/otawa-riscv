@@ -29,18 +29,24 @@ extend
 	and, andi, or, ori, xor, xori,
 	sll, slli, sra, srai, srl, srli,
 	slt, sltu, slti, sltiu,
-	lui, auipc
+	lui, auipc,
+	addiw, addw, subw,
+	slliw, srliw, sraiw,
+	sllw, srlw, sraw,
 		otawa_kind = IS_ALU | IS_INT
 
 // integer division
 extend
 	div, divu,
-	rem, remu
+	rem, remu,
+	divw, divuw,
+	remw, remuw
 		otawa_kind = IS_ALU | IS_INT | IS_DIV
 
 // integer multiplication
 extend
-	mul, mulh, mulhu, mulhsu
+	mul, mulh, mulhu, mulhsu,
+	mulw
 		otawa_kind = IS_ALU | IS_INT | IS_MUL
 
 // inconditional branch and link
@@ -81,4 +87,4 @@ extend
 // control special instruction
 extend
 	syscall
-		otawa_kind = IS_CONTROL | IS_TRAP
+		otawa_kind = IS_CONTROL | IS_TRAP | IS_SPECIAL

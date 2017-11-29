@@ -1,6 +1,7 @@
 
 canon "record"(card(5))
 macro R(r) = if r != 0 then "record"(r); endif
+macro F(r) = "record"(r);
 
 extend
 	add, sub,
@@ -95,17 +96,22 @@ extend
 		otawa_write = { F(dest); }
 
 extend
-	fcvts, fcvt2d, fmv2
+	fcvts, fcvt2d, fmv2,
 	fclasss, fclassd,
 	fcvt3s, fcvt4d, fmv3
 		otawa_read = { F(src); }
 		otawa_write = { R(dest); }
 
 extend
-	fcvt2s, fcvtd, fcvt3d, fmv,
+	fcvt2s, fcvt3d, fmv,
 	fcvt4s, fcvt5d, fmv4
 		otawa_read = { R(src); }
 		otawa_write = { F(dest); }
+
+extend
+	fcvtd
+		otawa_read = { F(src); }
+		otawa_write = { R(dest); }
 
 extend
 	fcmps, fcmpd

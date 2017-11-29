@@ -1,6 +1,4 @@
-let x = 0
 
-/*
 canon "record"(card(5))
 macro R(r) = if r != 0 then "record"(r); endif
 
@@ -27,13 +25,13 @@ extend
 
 extend
 	div, divu,
-	rem, remu,
+	rem, remu
 		otawa_read = { R(dividend); R(divisor); }
-		otawa_write = { R(dest) }
+		otawa_write = { R(dest); }
 		
 extend
 	mul, mulh, mulhu, mulhsu
-		otawa_read	= { R(multiplier); R(multilicand); }
+		otawa_read	= { R(multiplier); R(multiplicand); }
 		otawa_write = { R(dest); }
 	
 extend
@@ -72,4 +70,4 @@ extend
 	syscall
 		otawa_read = { R(source); }
 		otawa_write = { R(dest); }
-*/
+

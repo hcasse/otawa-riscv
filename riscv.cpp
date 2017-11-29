@@ -1,5 +1,5 @@
 /*
- *	otawa-riscv -- OTAWA loader to support RISC-V instruction set
+ *	otawa-riscv -- OTAWA loader for RISC-V instruction set
  *
  *	This file is part of OTAWA
  *	Copyright (c) 2017, IRIT UPS.
@@ -39,9 +39,9 @@ extern "C" {
 namespace otawa { namespace riscv {
 
 // Register description
-hard::PlainBank R("GPR", hard::Register::INT, 32, "r%d", 32);
+hard::RegBank R(hard::RegBank::Make("GPR").gen(32, hard::Register::Make("r%d")));
 hard::Register PC("PC", hard::Register::ADDR, 32);
-hard::MeltedBank MISC("Misc", &PC, nullptr);
+hard::RegBank MISC(hard::RegBank::Make("Misc").add(PC));
 static const hard::RegBank *banks_tab[] = { &R, &MISC };
 static genstruct::Table<const hard::RegBank *> banks_table(banks_tab, 2);
 
@@ -93,6 +93,10 @@ public:
 	void semInsts(sem::Block &block) override;
 	void readRegSet (RegSet &set) override;
 	void writeRegSet(RegSet &set) override;
+
+	// deprecated
+	const elm::genstruct::Table<hard::Register *>& readRegs(void) override;
+	const elm::genstruct::Table<hard::Register *>& writtenRegs(void) override;
 
 protected:
 	void decodeRegs(void);
@@ -478,6 +482,44 @@ otawa::Inst *BranchInst::target(void) {
 	return _target;
 }
 
+
+const elm::genstruct::Table<hard::Register *>& Inst::readRegs(void) {
+	// a bit ugly but this method is deprecated
+	static Vector<elm::genstruct::AllocatedTable<hard::Register *> *> tabs;
+	RegSet set;
+	readRegSet(set);
+	if(tabs.length() < set.count() + 1) {
+		int osize = tabs.length();
+		tabs.setLength(set.count() + 1);
+		for(int i = osize; i < tabs.length(); i++)
+			tabs[i] = nullptr;
+	}
+	if(tabs[set.count()] == nullptr)
+		tabs[set.count()] = new elm::genstruct::AllocatedTable<hard::Register *>(set.count());
+	elm::genstruct::AllocatedTable<hard::Register *>& t = *tabs[set.count()];
+	for(int i = 0; i < set.count(); i++)
+		t[i] = proc.platform()->findReg(set[i]);
+	return t;
+}
+
+const elm::genstruct::Table<hard::Register *>& Inst::writtenRegs(void) {
+	// a bit ugly but this method is deprecated
+	static Vector<elm::genstruct::AllocatedTable<hard::Register *> *> tabs;
+	RegSet set;
+	writeRegSet(set);
+	if(tabs.length() < set.count() + 1) {
+		int osize = tabs.length();
+		tabs.setLength(set.count() + 1);
+		for(int i = osize; i < tabs.length(); i++)
+			tabs[i] = nullptr;
+	}
+	if(tabs[set.count()] == nullptr)
+		tabs[set.count()] = new elm::genstruct::AllocatedTable<hard::Register *>(set.count());
+	elm::genstruct::AllocatedTable<hard::Register *>& t = *tabs[set.count()];
+	for(int i = 0; i < set.count(); i++)
+		t[i] = proc.platform()->findReg(set[i]);
+	return t;
+}
 
 // delayType for BranchInst
 delayed_t BranchInst::delayType(void) {

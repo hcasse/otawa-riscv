@@ -4,9 +4,7 @@
 #include <$(proc)/id.h>
 #include <$(proc)/macros.h>
 
-#define record(n)	rs.add(otawa::mips::R.get(n)->platformNumber())
-#define recordHI()	rs.add(otawa::mips::HI.platformNumber())
-#define recordLO()	rs.add(otawa::mips::LO.platformNumber())
+#define record(n)	rs.add(otawa::riscv::R.get(n)->platformNumber())
 
 typedef void (*write_fun_t)($(proc)_inst_t *inst, otawa::RegSet& rs);
 

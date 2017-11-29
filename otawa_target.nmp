@@ -8,7 +8,7 @@ extend
 	blt, bltu,
 	bge, bgeu
 		otawa_target = __IADDR + tgt_offset
-		otawa_delayed = DELAYED_Always
+		otawa_delayed = DELAYED_Taken
 
 extend
 	jal

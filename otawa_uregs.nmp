@@ -128,3 +128,15 @@ extend
 		otawa_read = { R(source); }
 		otawa_write = { R(dest); }
 
+// RC/MC custom instructions
+// remove these lines when not working with the RC/MC architecture
+extend
+	rcmc1
+		otawa_read = { R(src1); R(src2); }
+		otawa_write = { }
+
+extend
+	rcmc2, rcmc3, rcmc4,
+	rcmc5, rcmc6
+		otawa_read = { R(src); }
+		otawa_write = { R(dest); }

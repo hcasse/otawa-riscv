@@ -157,3 +157,14 @@ extend
 extend
 	syscall
 		otawa_kind = IS_CONTROL | IS_TRAP | IS_SPECIAL
+
+// RC/MC custom instructions
+// remove these lines when not working with the RC/MC architecture
+extend
+	rcmc1
+		otawa_kind = IS_ALU | IS_INT
+
+extend
+	rcmc2, rcmc3, rcmc4,
+	rcmc5, rcmc6
+		otawa_kind = IS_CONTROL | IS_COND

@@ -14,3 +14,11 @@ extend
 	jal
 		otawa_target = __IADDR + tgt_offset
 		otawa_delayed = DELAYED_Always
+
+// RC/MC custom instructions
+// remove these lines when not working with the RC/MC architecture
+extend
+	rcmc2, rcmc3, rcmc4,
+	rcmc5, rcmc6
+		otawa_target = __IADDR + tgt_offset
+		otawa_delayed = DELAYED_Taken

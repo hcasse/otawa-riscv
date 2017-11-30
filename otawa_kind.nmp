@@ -89,6 +89,22 @@ extend
 	sb, sh, sw, sd
 		otawa_kind = IS_MEM | IS_STORE | IS_INT
 
+// Atomic Memory Operations
+extend
+	lr
+		otawa_kind = IS_ATOMIC | IS_LOAD
+
+extend
+	sc
+		otawa_kind = IS_ATOMIC | IS_STORE
+
+extend
+	amoswap, amoadd,
+	amoxor, amoand, amoor,
+	amomin, amomax,
+	amominu, amomaxu
+		otawa_kind = IS_ATOMIC
+
 // floating point load
 extend
 	flw, fld

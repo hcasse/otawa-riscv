@@ -63,6 +63,20 @@ extend
 		otawa_write = { }
 
 extend
+	lr
+		otawa_read = { R(addr); }
+		otawa_write = { R(dest); }
+
+extend
+	sc,
+	amoswap, amoadd,
+	amoxor, amoand, amoor,
+	amomin, amomax,
+	amominu, amomaxu
+		otawa_read = { R(src); R(addr); }
+		otawa_write = { R(dest); }
+
+extend
 	flw, fld
 		otawa_read = { R(base); }
 		otawa_write = { F(dest); }

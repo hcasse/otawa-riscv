@@ -138,8 +138,13 @@ extend
 		otawa_write = { }
 
 extend
-	syscall
+	csrrw, csrrs, csrrc
 		otawa_read = { R(source); }
+		otawa_write = { R(dest); }
+
+extend
+	csrrwi, csrrsi, csrrci
+		otawa_read = { }
 		otawa_write = { R(dest); }
 
 // RC/MC custom instructions

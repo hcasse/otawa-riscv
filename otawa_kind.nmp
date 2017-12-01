@@ -62,7 +62,7 @@ extend
 extend
 	jalr
 		otawa_kind = IS_CONTROL |
-			(if dest == 1 then IS_CALL
+			(if dest == 1 then IS_CALL | IS_INDIRECT
 			else if dest == 0 && offset == 0 && base == 1 then IS_RETURN
 			else if dest == 0 && offset == 0 && base != 1 then IS_INDIRECT
 			else IS_CALL | IS_INDIRECT

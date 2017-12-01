@@ -263,7 +263,7 @@ public:
 			gel_sect_t *sect = gel_getsectbyidx(_file, i);
 			ASSERT(sect);
 			gel_sect_infos(sect, &infos);
-			if(infos.vaddr != 0 && infos.size != 0) {
+			if(infos.flags & SHF_ALLOC) {
 				int flags = 0;
 				if(infos.flags & SHF_EXECINSTR)
 					flags |= Segment::EXECUTABLE;
@@ -473,11 +473,10 @@ void Inst::semInsts(sem::Block &block) {
 otawa::Inst *BranchInst::target(void) {
 	if (!isTargetDone) {
 		isTargetDone = true;
-
-		// try to decode the address
-		riscv_address_t a = proc.decodeTarget(_addr);
-		if (a)
+		if(!isIndirect()) {
+			riscv_address_t a = proc.decodeTarget(_addr);
 			_target = process().findInstAt(a);
+		}
 	}
 	return _target;
 }

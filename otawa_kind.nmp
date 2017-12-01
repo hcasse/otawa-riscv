@@ -92,18 +92,18 @@ extend
 // Atomic Memory Operations
 extend
 	lr
-		otawa_kind = IS_ATOMIC | IS_LOAD
+		otawa_kind = 0x40000 | IS_LOAD
 
 extend
 	sc
-		otawa_kind = IS_ATOMIC | IS_STORE
+		otawa_kind = 0x40000 | IS_STORE
 
 extend
 	amoswap, amoadd,
 	amoxor, amoand, amoor,
 	amomin, amomax,
 	amominu, amomaxu
-		otawa_kind = IS_ATOMIC
+		otawa_kind = 0x40000
 
 // floating point load
 extend

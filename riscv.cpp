@@ -43,7 +43,7 @@ hard::RegBank R(hard::RegBank::Make("GPR").gen(32, hard::Register::Make("r%d")))
 hard::Register PC("PC", hard::Register::ADDR, 32);
 hard::RegBank MISC(hard::RegBank::Make("Misc").add(PC));
 static const hard::RegBank *banks_tab[] = { &R, &MISC };
-static genstruct::Table<const hard::RegBank *> banks_table(banks_tab, 2);
+static Array<const hard::RegBank *> banks_table(2, banks_tab);
 
 } }	// otawa::riscv
 
@@ -80,7 +80,7 @@ class Inst: public otawa::Inst {
 public:
 
 	inline Inst(Process& process, kind_t kind, Address addr)
-		: proc(process), _kind(kind), _addr(addr) {
+		: proc(process), _kind(kind), _addr(addr.offset()) {
 		}
 	Process &process(void) { return proc; }
 
@@ -95,8 +95,8 @@ public:
 	void writeRegSet(RegSet &set) override;
 
 	// deprecated
-	const elm::genstruct::Table<hard::Register *>& readRegs(void) override;
-	const elm::genstruct::Table<hard::Register *>& writtenRegs(void) override;
+	const Array<hard::Register *>& readRegs(void) override;
+	const Array<hard::Register *>& writtenRegs(void) override;
 
 protected:
 	void decodeRegs(void);
@@ -334,7 +334,7 @@ public:
 	inline riscv_decoder_t *decoder() const { return _decoder; }
 	inline void *platform(void) const { return _platform; }
 
-	virtual Option<Pair<cstring, int> > getSourceLine(Address addr) throw (UnsupportedFeatureException) {
+	virtual Option<Pair<cstring, int> > getSourceLine(Address addr) {
 		setup_debug();
 		if (!map)
 			return none;
@@ -345,7 +345,7 @@ public:
 		return some(pair(cstring(file), line));
 	}
 
-	virtual void getAddresses(cstring file, int line, Vector<Pair<Address, Address> >& addresses) throw (UnsupportedFeatureException) {
+	virtual void getAddresses(cstring file, int line, Vector<Pair<Address, Address> >& addresses) {
 		setup_debug();
 		addresses.clear();
 		if (!map)
@@ -474,7 +474,7 @@ otawa::Inst *BranchInst::target(void) {
 	if (!isTargetDone) {
 		isTargetDone = true;
 		if(!isIndirect()) {
-			riscv_address_t a = proc.decodeTarget(_addr);
+			riscv_address_t a = proc.decodeTarget(_addr).offset();
 			_target = process().findInstAt(a);
 		}
 	}
@@ -482,9 +482,9 @@ otawa::Inst *BranchInst::target(void) {
 }
 
 
-const elm::genstruct::Table<hard::Register *>& Inst::readRegs(void) {
+const Array<hard::Register *>& Inst::readRegs(void) {
 	// a bit ugly but this method is deprecated
-	static Vector<elm::genstruct::AllocatedTable<hard::Register *> *> tabs;
+	static Vector<AllocArray<hard::Register *> *> tabs;
 	RegSet set;
 	readRegSet(set);
 	if(tabs.length() < set.count() + 1) {
@@ -494,16 +494,16 @@ const elm::genstruct::Table<hard::Register *>& Inst::readRegs(void) {
 			tabs[i] = nullptr;
 	}
 	if(tabs[set.count()] == nullptr)
-		tabs[set.count()] = new elm::genstruct::AllocatedTable<hard::Register *>(set.count());
-	elm::genstruct::AllocatedTable<hard::Register *>& t = *tabs[set.count()];
+		tabs[set.count()] = new AllocArray<hard::Register *>(set.count());
+	AllocArray<hard::Register *>& t = *tabs[set.count()];
 	for(int i = 0; i < set.count(); i++)
 		t[i] = proc.platform()->findReg(set[i]);
 	return t;
 }
 
-const elm::genstruct::Table<hard::Register *>& Inst::writtenRegs(void) {
+const Array<hard::Register *>& Inst::writtenRegs(void) {
 	// a bit ugly but this method is deprecated
-	static Vector<elm::genstruct::AllocatedTable<hard::Register *> *> tabs;
+	static Vector<AllocArray<hard::Register *> *> tabs;
 	RegSet set;
 	writeRegSet(set);
 	if(tabs.length() < set.count() + 1) {
@@ -513,8 +513,8 @@ const elm::genstruct::Table<hard::Register *>& Inst::writtenRegs(void) {
 			tabs[i] = nullptr;
 	}
 	if(tabs[set.count()] == nullptr)
-		tabs[set.count()] = new elm::genstruct::AllocatedTable<hard::Register *>(set.count());
-	elm::genstruct::AllocatedTable<hard::Register *>& t = *tabs[set.count()];
+		tabs[set.count()] = new AllocArray<hard::Register *>(set.count());
+	AllocArray<hard::Register *>& t = *tabs[set.count()];
 	for(int i = 0; i < set.count(); i++)
 		t[i] = proc.platform()->findReg(set[i]);
 	return t;

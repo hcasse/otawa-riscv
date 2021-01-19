@@ -230,7 +230,7 @@ public:
 			genv.flags = GEL_ENV_NO_STACK;
 
 		// build the GEL image
-		_file = gel_open(&path, NULL, GEL_OPEN_QUIET);
+		_file = gel_open(path.chars(), NULL, GEL_OPEN_QUIET);
 		if(!_file)
 			throw LoadException(_ << "cannot load \"" << path << "\": " << gel_strerror());
 		gel_image_t *gimage = gel_image_load(_file, &genv, 0);
